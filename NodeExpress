@@ -1,0 +1,65 @@
+sudo apt-get update
+sudo apt-get upgrade
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+source ~/.bashrc
+nvm install 18
+node -v
+npm -v
+sudo apt-get install libcap2-bin
+sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``
+npm install pm2 -g
+pm2 startup
+--Pones el comando que te arroja
+sudo apt-get install git
+git config --global user.name "AlbertoApaza"
+git config --global user.email alberto.apaza@vallegrande.edu.pe
+git clone https://github.com/vallegrande/AS231S2_T06.git
+cd AS231S2_T06
+git switch Sitio-Web 
+nano .env
+--------------------------------------
+NODE_ENV=SitioWeb
+IP= tu_ipPublica
+HTTP_PORT=3000
+---------------------------------------
+nano index.html
+---------------------------------------
+<script>
+    function getUuid() {
+        $.ajax({
+            url: "http:/tu_ipPublica",
+            type: 'GET',
+            success: function (res) {
+                console.log(res);
+                $('#result').html(res)
+            },	
+            error: function (xhr, ajaxOptions, thrownError) {
+                $('#result').html(`Error: ${xhr.status} ${thrownError}`)
+            }
+        });
+    }
+</script>
+------------------------------------------
+npm install
+
+nano conecion.js
+-------------------------------------------                                                                                 
+const http = require('http');
+const express = require('express');
+const app = express();
+
+app.use(express.static(__dirname+'/'));
+
+app.get('/', (req, res) => {
+   res.sendFile("/home/ubuntu/index.html")
+});
+
+app.listen(3000);
+console.log('serve en port 3000');
+---------------------------------------------
+pm2 start conecion.js
+-Ingresas a tu navegador y pones tu ip y el puerto: 
+ejemplo:
+http://52.204.28.235:3000/index.html
+pm2 ls
+pm2 save
